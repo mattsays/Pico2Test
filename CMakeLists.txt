@@ -17,7 +17,8 @@ function(CloneRepository repositoryURL branchName projectName sourceDir)
   FetchContent_MakeAvailable(${projectName})
 endfunction(CloneRepository)
 
-set(libZant_a "${CMAKE_BINARY_DIR}/Z-ant/zig-out/lib/libZant.a")
+#set(libZant_a "${CMAKE_BINARY_DIR}/Z-ant/zig-out/lib/libZant.a")
+set(libZant_a "${CMAKE_BINARY_DIR}/libZant.a")
 
 CloneRepository("https://github.com/ZIGTinyBook/Z-Ant" "embedded" Zant "${CMAKE_BINARY_DIR}/Z-ant")
 add_custom_command(
