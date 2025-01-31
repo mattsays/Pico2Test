@@ -2,9 +2,8 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 
-extern void    set_log_function(void (*log_function)(uint8_t *string));
-extern void    set_timestamp_function(uint64_t (*timestamp_function)(void));
-extern int16_t infer();
+extern void    setLogFunction(void (*log_function)(uint8_t *string));
+extern int16_t predict(void *input, void *output);
 
 
 static void log_fn(uint8_t *string) {
@@ -12,17 +11,13 @@ static void log_fn(uint8_t *string) {
 }
 
 
-static uint64_t timestamp_fn(void) {
-    return to_us_since_boot(get_absolute_time());
-}
-
-
 int main() {
-    set_log_function(log_fn);
-    set_timestamp_function(timestamp_fn);
+    setLogFunction(log_fn);
 
     setup_default_uart();
 
-    printf("Hello, world %i!\n", infer(log_fn));
+    double input[3] = {1.23, 4.56, 6.78};
+
+    printf("Hello, world %i!\n", predict(input, NULL));
     return 0;
 }

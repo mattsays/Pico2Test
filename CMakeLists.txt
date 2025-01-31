@@ -1,31 +1,12 @@
 cmake_minimum_required(VERSION 3.13...3.27)
 
-include(FetchContent)
+set(libneural_network_a "${CMAKE_SOURCE_DIR}/lib/neural_network/zig-out/lib/libneural_network.a")
 
-function(CloneRepository repositoryURL branchName projectName sourceDir)
-  #Commands are left empty so that we only checkout the source and no not perform any kind of build
-  message("Starting to clone ${projectName} into ${sourceDir}")
-  FetchContent_Declare(
-    "${projectName}"
-    GIT_REPOSITORY "${repositoryURL}"
-    SOURCE_DIR "${sourceDir}"
-    GIT_TAG "origin/${branchName}"
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ""
-  )
-  FetchContent_MakeAvailable(${projectName})
-endfunction(CloneRepository)
-
-#set(libZant_a "${CMAKE_BINARY_DIR}/Z-ant/zig-out/lib/libZant.a")
-set(libZant_a "${CMAKE_BINARY_DIR}/libZant.a")
-
-CloneRepository("https://github.com/ZIGTinyBook/Z-Ant" "embedded" Zant "${CMAKE_BINARY_DIR}/Z-ant")
 add_custom_command(
-  OUTPUT "${libZant_a}"
-  COMMAND cd ${CMAKE_BINARY_DIR}/Z-ant && zig build lib -Dmodel=exportTryModel.bin -Dtarget=thumb-freestanding -Dcpu=cortex_m0
+  OUTPUT "${libneural_network_a}"
+  COMMAND cd ${CMAKE_SOURCE_DIR}/lib/neural_network && zig build lib -Dtarget=thumb-freestanding -Dcpu=cortex_m33
   )
-add_custom_target(libZant DEPENDS "${libZant_a}")
+add_custom_target(libneural_network DEPENDS "${libneural_network_a}")
 
 # initialize the SDK based on PICO_SDK_PATH
 # note: this must happen before project()
@@ -40,8 +21,8 @@ pico_sdk_init()
 add_executable(main
     src/main.c
 )
-add_dependencies(main libZant)
-target_link_libraries(main "${libZant_a}")
+add_dependencies(main libneural_network)
+target_link_libraries(main "${libneural_network_a}")
 
 # Add pico_stdlib library which aggregates commonly used features
 target_link_libraries(main pico_stdlib)
