@@ -4,7 +4,7 @@ set(PICO_SDK_PATH ${CMAKE_CURRENT_LIST_DIR}/pico-sdk)
 set(PICO_PLATFORM "rp2350")
 set(PICO_BOARD "pico2")
 
-set(libneural_network_a "${CMAKE_SOURCE_DIR}/lib/Z-Ant/zig-out/lib/libtensor_math.a")
+set(libneural_network_a "${CMAKE_SOURCE_DIR}/lib/Z-Ant/zig-out/lib/libstatic_lib.a")
 
 add_custom_command(
   OUTPUT "${libneural_network_a}"
