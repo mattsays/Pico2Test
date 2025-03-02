@@ -1,16 +1,9 @@
 cmake_minimum_required(VERSION 3.13...3.27)
 
-set(PICO_SDK_PATH ${CMAKE_CURRENT_LIST_DIR}/pico-sdk)
 set(PICO_PLATFORM "rp2350")
 set(PICO_BOARD "pico2")
 
-set(libneural_network_a "${CMAKE_SOURCE_DIR}/lib/Z-Ant/zig-out/lib/libstatic_lib.a")
-
-add_custom_command(
-  OUTPUT "${libneural_network_a}"
-  COMMAND cd ${CMAKE_SOURCE_DIR}/lib/Z-Ant && zig build lib -Dtarget=thumb-freestanding -Dcpu=cortex_m33
-  )
-add_custom_target(libneural_network DEPENDS "${libneural_network_a}")
+set(libneural_network_a "${CMAKE_SOURCE_DIR}/lib/libstatic_lib.a")
 
 # initialize the SDK based on PICO_SDK_PATH
 # note: this must happen before project()
@@ -25,7 +18,7 @@ pico_sdk_init()
 add_executable(main
     src/main.c
 )
-add_dependencies(main libneural_network)
+
 target_link_libraries(main "${libneural_network_a}")
 
 # Add pico_stdlib library which aggregates commonly used features
