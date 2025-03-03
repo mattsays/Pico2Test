@@ -107,7 +107,7 @@ int main()
         printf("\nPrediction took %lld microseconds\n", diff_us);
         printf("\n=== Prediction ===\n");
         printf("Mhhhh let me guess....\nthat's a \n\n %d \n\n right?.\n", predicted_digit);
-        printf("Nah no guessing is need I know for sure that is the right answer.\n");
+        printf("Nah no guessing is needed I know for sure this is the right answer.\n");
         printf("I'm always right.\n");
 
         gpio_put(LED_PIN, 0);
