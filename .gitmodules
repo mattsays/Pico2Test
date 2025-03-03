@@ -1,6 +1,3 @@
-[submodule "lib/Z-Ant"]
-	path = lib/Z-Ant
-	url = https://github.com/ZIGTinyBook/Z-Ant.git
 [submodule "pico-sdk"]
 	path = pico-sdk
 	url = https://github.com/raspberrypi/pico-sdk.git
